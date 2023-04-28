@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if error %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="username"> Username: </label>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <button type=""submit>Log in</button>
+    </form>
+    <a href="">Register</a>
+{% endblock %}
+
+
+
+
+
+
+
+
+
