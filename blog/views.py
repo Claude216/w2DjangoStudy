@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from .forms import PostForm
 from .models import Post
@@ -18,7 +19,7 @@ def post_detail(request, pk):
 
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -61,4 +62,16 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+################ -------- REGISTER -------- ################
+def register(request):
+    if request.method== 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'blog/register.html', {'form': form})
+
 
